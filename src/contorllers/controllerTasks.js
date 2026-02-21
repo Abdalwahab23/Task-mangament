@@ -46,13 +46,13 @@ const updateTask = async (req, res) => {
   }
 };
 
-const deleteTask = async (req, res) => {
-  try {
-    const task = await Task.findByIdAndDelete({ _id: req.params.id });
-    res.status(200).json({ message: "Task deleted successfully", task });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+const deleteTask = asyncHandler(async (req, res) => {
+  const task = await Task.findByIdAndDelete({ _id: req.params.id });
+  if (task.owner.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("You are not authorized to delete this task");
   }
-};
+  res.status(200).json({ message: "Task deleted successfully", task });
+});
 
 export { createTasks, getAllTasks, getTaskById, updateTask, deleteTask };
