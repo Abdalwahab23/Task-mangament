@@ -3,7 +3,7 @@ import connectDB from "./src/config/db.js";
 import dotenv from "dotenv";
 import routeUsers from "./src/routes/routeUsers.js";
 import errorHandler from "./src/middleware/middlewareUsers.js";
-import handleRejection from "./src/utils/handleRejection.js";
+import handleRejection from "./src/validator/handleRejection.js";
 dotenv.config();
 
 const app = express();
